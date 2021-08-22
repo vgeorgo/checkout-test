@@ -14,23 +14,64 @@
     </v-app-bar>
 
     <v-main>
-      <v-tabs fixed-tabs background-color="yellow" v-model="tabs">
-        <v-tab>Choose</v-tab>
-        <v-tab>Checkout</v-tab>
-        <v-tab>Status</v-tab>
-      </v-tabs>
+      <v-stepper alt-labels v-model="step" style="height: 100%">
+        <v-stepper-header>
+          <v-stepper-step step="1" :complete="step > 1">
+            Choose
+          </v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step step="2" :complete="step > 2">
+            Review
+          </v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step step="3" :complete="step > 3">
+            Payment
+          </v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step step="4" :complete="step > 3">
+            Enjoy!
+          </v-stepper-step>
+        </v-stepper-header>
 
-      <v-tabs-items v-model="tabs">
-        <v-tab-item key="choose" :transition="false">
-          <Choose :categories="categories" :items="items" />
-        </v-tab-item>
-        <v-tab-item key="checkout" :transition="false">
-          <Checkout :items="items" />
-        </v-tab-item>
-        <v-tab-item key="status" :transition="false">
-          <Status />
-        </v-tab-item>
-      </v-tabs-items>
+        <v-stepper-items>
+          <v-stepper-content step="1">
+            <Choose :categories="categories" :items="items" />
+            <v-container class="d-flex flex-row-reverse">
+              <v-btn color="yellow" @click="step = 2" class="ml-5" large>
+                Review
+              </v-btn>
+              <v-btn text large> Clear cart </v-btn>
+            </v-container>
+          </v-stepper-content>
+
+          <v-stepper-content step="2">
+            <Checkout :items="items" />
+            <v-container class="d-flex flex-row-reverse">
+              <v-btn color="yellow" @click="step = 3" class="ml-5" large>
+                Pay
+              </v-btn>
+              <v-btn text @click="step = 1" large> Back </v-btn>
+            </v-container>
+          </v-stepper-content>
+
+          <v-stepper-content step="3">
+            <Status />
+            <v-container class="d-flex flex-row-reverse">
+              <v-btn color="yellow" @click="step = 4" class="ml-5" large>
+                Confirm
+              </v-btn>
+              <v-btn text @click="step = 2" large> Back </v-btn>
+            </v-container>
+          </v-stepper-content>
+
+          <v-stepper-content step="4">
+            <Status />
+            <v-container class="d-flex flex-row-reverse">
+              <v-btn color="yellow" @click="step = 1" large> Back </v-btn>
+            </v-container>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
     </v-main>
   </v-app>
 </template>
@@ -50,7 +91,7 @@ export default {
   },
 
   data: () => ({
-    tabs: null,
+    step: 1,
     categories: [
       {
         id: 1,

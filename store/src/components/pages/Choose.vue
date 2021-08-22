@@ -56,7 +56,7 @@
 
 <script>
 import cartStore from "../../stores/cart";
-import { format } from "../../helpers/currency";
+import { formatNumber } from "../../helpers/currency";
 
 export default {
   name: "Choose",
@@ -71,9 +71,6 @@ export default {
   data: () => ({}),
 
   computed: {
-    getItems: function () {
-      return cartStore.state.totalItems;
-    },
     getItemAmount: function () {
       return (item) => {
         if (!cartStore.state.items[item.id]) return 0;
@@ -82,8 +79,8 @@ export default {
     },
     getItemPrice: function () {
       return (item) => {
-        if (!cartStore.state.items[item.id]) return format(0);
-        return format(cartStore.state.items[item.id].price);
+        if (!cartStore.state.items[item.id]) return formatNumber(0);
+        return formatNumber(cartStore.state.items[item.id].price);
       };
     },
     categoryItems: function () {
