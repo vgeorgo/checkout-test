@@ -9,9 +9,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in itemRows" :key="item.id">
-          <td class="text-left" :class="item.customClass">{{ item.name }}</td>
-          <td class="text-center" :class="item.customClass">
+        <tr v-for="item in itemRows" :key="item.id" :class="item.customClass">
+          <td class="text-left">{{ item.name }}</td>
+          <td class="text-center">
             <v-btn v-if="!item.locked" icon @click="minusItem(item)">
               <v-icon>mdi-minus</v-icon>
             </v-btn>
@@ -20,7 +20,7 @@
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </td>
-          <td class="text-right" :class="item.customClass">{{ item.total }}</td>
+          <td class="text-right">{{ item.total }}</td>
         </tr>
       </tbody>
     </template>
