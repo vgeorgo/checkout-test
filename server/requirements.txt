@@ -1,2 +1,5 @@
 Flask==2.0.1
-flask-cors
+flask-cors==3.0.10
+SQLAlchemy==1.4.23
+SQLAlchemy-serializer
+Flask-Migrate==3.1.0
