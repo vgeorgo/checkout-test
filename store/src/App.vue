@@ -40,22 +40,22 @@
               <v-btn color="yellow" @click="step = 2" class="ml-5" large>
                 Review
               </v-btn>
-              <v-btn text large> Clear cart </v-btn>
+              <v-btn text @click="clearCart" large> Clear cart </v-btn>
             </v-container>
           </v-stepper-content>
 
           <v-stepper-content step="2">
-            <Checkout :items="items" />
+            <Review :items="items" />
             <v-container class="d-flex flex-row-reverse">
               <v-btn color="yellow" @click="step = 3" class="ml-5" large>
-                Pay
+                Checkout
               </v-btn>
               <v-btn text @click="step = 1" large> Back </v-btn>
             </v-container>
           </v-stepper-content>
 
           <v-stepper-content step="3">
-            <Status />
+            <Checkout :items="items" />
             <v-container class="d-flex flex-row-reverse">
               <v-btn color="yellow" @click="step = 4" class="ml-5" large>
                 Confirm
@@ -77,7 +77,9 @@
 </template>
 
 <script>
+import cartStore from "./stores/cart";
 import Choose from "./components/pages/Choose.vue";
+import Review from "./components/pages/Review.vue";
 import Checkout from "./components/pages/Checkout.vue";
 import Status from "./components/pages/Status.vue";
 
@@ -86,6 +88,7 @@ export default {
 
   components: {
     Choose,
+    Review,
     Checkout,
     Status,
   },
@@ -192,5 +195,11 @@ export default {
       },
     ],
   }),
+
+  methods: {
+    clearCart: function () {
+      cartStore.dispatch("clear");
+    },
+  },
 };
 </script>

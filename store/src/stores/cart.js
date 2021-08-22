@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const defaultItem = {
   amount: 0,
-  price: 0.0,
+  total: 0.0,
 };
 
 export default new Vuex.Store({
@@ -17,7 +17,7 @@ export default new Vuex.Store({
   getters: {
     getItem: (state) => (id) => state.items[id] || { ...defaultItem },
     getItemAmount: (state, getters) => (id) => getters.getItem(id).amount,
-    getItemPrice: (state, getters) => (id) => getters.getItem(id).price,
+    getItemTotal: (state, getters) => (id) => getters.getItem(id).total,
   },
   actions: {
     addItem({ commit }, item) {
@@ -28,12 +28,20 @@ export default new Vuex.Store({
       commit('minusItem', item);
       commit('updateTotal');
     },
+    clear({ commit }) {
+      commit('clear');
+    }
   },
   mutations: {
+    clear(state) {
+      state.totalItems = 0.0;
+      state.totalPrice = 0.0;
+      state.items = {};
+    },
     addItem(state, item) {
       const itemCart = state.items[item.id] || { ...defaultItem };
       itemCart.amount += 1;
-      itemCart.price = itemCart.amount * item.price;
+      itemCart.total = itemCart.amount * item.price;
 
       state.items[item.id] = itemCart;
     },
@@ -42,7 +50,7 @@ export default new Vuex.Store({
       if (!itemCart) return;
 
       itemCart.amount -= 1;
-      itemCart.price = itemCart.amount * item.price;
+      itemCart.total = itemCart.amount * item.price;
       if (itemCart.amount === 0) delete state.items[item.id];
     },
     updateTotal(state) {
@@ -51,7 +59,7 @@ export default new Vuex.Store({
 
       Object.keys(state.items).map((key) => {
         state.totalItems += state.items[key].amount;
-        state.totalPrice += state.items[key].price;
+        state.totalPrice += state.items[key].total;
       });
 
       state.items = { ...state.items }

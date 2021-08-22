@@ -34,7 +34,7 @@
 
               <v-card-actions>
                 <v-card-text>
-                  Total: {{ getItemAmount(item) }} ($ {{ getItemPrice(item) }})
+                  Total: {{ getItemAmount(item) }} ($ {{ getItemTotal(item) }})
                 </v-card-text>
                 <v-spacer></v-spacer>
 
@@ -77,10 +77,10 @@ export default {
         return cartStore.state.items[item.id].amount;
       };
     },
-    getItemPrice: function () {
+    getItemTotal: function () {
       return (item) => {
         if (!cartStore.state.items[item.id]) return formatNumber(0);
-        return formatNumber(cartStore.state.items[item.id].price);
+        return formatNumber(cartStore.state.items[item.id].total);
       };
     },
     categoryItems: function () {
