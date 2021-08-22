@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  server:
+    build: ./server
+    env_file: ./server/.env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/src:/usr/src
+    depends_on:
+      - postgres
+    stdin_open: true
+    tty: true
+
+  store:
+    build: ./store
+    env_file: ./store/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./store/src:/usr/src
+    depends_on:
+      - server
+
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: checkout
+    ports:
+      - "5432:5432"
+      
+  pgadmin:
+    image: dpage/pgadmin4:5.5
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "5001:80"
+    depends_on:
+      - postgres
