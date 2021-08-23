@@ -4,15 +4,26 @@
       <template v-slot:default>
         <thead>
           <tr>
+            <th class="text-left" style="width: 10%">Photo</th>
             <th class="text-left" style="width: 50%">Item</th>
             <th class="text-center" style="width: 20%">Amount</th>
-            <th class="text-right" style="width: 30%">Price</th>
+            <th class="text-right" style="width: 20%">Price</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in itemRows" :key="item.id" :class="item.customClass">
+            <td class="text-left">
+              <v-img
+                v-if="item.image_id"
+                class="white--text align-end"
+                :alt="`${item.name} Photo`"
+                :src="`/images/items/${item.image_id}.jpg`"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                max-width="80px"
+              />
+            </td>
             <td class="text-left">{{ item.name }}</td>
-            <td class="text-center">
+            <td class="text-center" nowrap>
               <v-btn v-if="!item.locked" icon @click="minusItem(item)">
                 <v-icon>mdi-minus</v-icon>
               </v-btn>
@@ -21,7 +32,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </td>
-            <td class="text-right">{{ item.total }}</td>
+            <td class="text-right" nowrap>{{ item.total }}</td>
           </tr>
         </tbody>
       </template>
