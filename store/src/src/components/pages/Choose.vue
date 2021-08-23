@@ -16,45 +16,7 @@
           <v-row class="mb-5">
             <div class="text-h4" cols="12">{{ category.name }}</div>
           </v-row>
-          <v-row dense>
-            <v-col
-              v-for="item in categoryItems[category.id]"
-              :key="`${category.id}-item-${item.id}`"
-              cols="12"
-              md="4"
-              sm="6"
-              lg="3"
-              xl="3"
-            >
-              <v-card>
-                <v-img
-                  class="white--text align-end"
-                  :alt="`${item.name} Photo`"
-                  :src="`/images/items/${item.image_id}.jpg`"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                  height="200px"
-                >
-                  <v-card-title v-text="item.name"></v-card-title>
-                </v-img>
-
-                <v-card-actions>
-                  <v-card-text>
-                    Total: {{ getItemAmount(item) }} ($
-                    {{ getItemTotal(item) }})
-                  </v-card-text>
-                  <v-spacer></v-spacer>
-
-                  <v-btn icon @click="minusItem(item)">
-                    <v-icon>mdi-minus</v-icon>
-                  </v-btn>
-
-                  <v-btn icon @click="addItem(item)">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
+          <ListItems :items="categoryItems[category.id]" />
         </v-container>
       </v-tab-item>
     </v-tabs>
@@ -77,36 +39,27 @@
 import cartStore from "../../stores/cart";
 import itemStore from "../../stores/item";
 import steps from "../../constants/steps";
-import { formatNumber } from "../../helpers/currency";
+
+import ListItems from "../ui/ListItems.vue";
 
 export default {
   name: "Choose",
 
-  components: {},
+  components: {
+    ListItems,
+  },
 
   data: () => ({}),
 
   computed: {
+    totalItems: function () {
+      return cartStore.state.totalItems;
+    },
     categories: function () {
       return itemStore.state.categories;
     },
     items: function () {
       return itemStore.state.items;
-    },
-    getItemAmount: function () {
-      return (item) => {
-        if (!cartStore.state.items[item.id]) return 0;
-        return cartStore.state.items[item.id].amount;
-      };
-    },
-    getItemTotal: function () {
-      return (item) => {
-        if (!cartStore.state.items[item.id]) return formatNumber(0);
-        return formatNumber(cartStore.state.items[item.id].total);
-      };
-    },
-    totalItems: function () {
-      return cartStore.state.totalItems;
     },
     categoryItems: function () {
       const mapData = {};
@@ -124,12 +77,6 @@ export default {
     },
     clearCart: function () {
       cartStore.dispatch("clear");
-    },
-    addItem: function (item) {
-      cartStore.dispatch("addItem", item);
-    },
-    minusItem: function (item) {
-      cartStore.dispatch("minusItem", item);
     },
   },
 };
