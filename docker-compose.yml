@@ -11,12 +11,12 @@ services:
     stdin_open: true
     tty: true
 
-  # store:
-  #   build: ./store
-  #   env_file: ./store/.env
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./store/src:/usr/src
-  #   depends_on:
-  #     - server
+  store:
+    build: ./store
+    env_file: ./store/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./store/src:/usr/src
+    depends_on:
+      - server
