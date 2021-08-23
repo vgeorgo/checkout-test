@@ -6,11 +6,11 @@ from models import setup_db, db, Category, Item, Order
 from exceptions import BusinessException
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app)
 
 setup_db(app)
 
-@app.route("/items", methods=['GET'])
+@app.route("/items", methods=['GET', 'OPTIONS'])
 def get_items():
   categories = list(map(lambda c: c.to_dict(), Category.query.all()))
   items = list(map(lambda i: i.to_dict(), Item.query.all()))
@@ -20,13 +20,13 @@ def get_items():
     'items': items,
   }), 200)
 
-@app.route("/orders", methods=['GET'])
+@app.route("/orders", methods=['GET', 'OPTIONS'])
 def get_orders():
   orders = list(map(lambda o: o.to_dict(), Order.query.all()))
   
   return make_response(jsonify(orders), 200)
 
-@app.route("/orders", methods=['POST'])
+@app.route("/orders", methods=['POST', 'OPTIONS'])
 def post_orders():
   try:
     request_data = request.get_json()

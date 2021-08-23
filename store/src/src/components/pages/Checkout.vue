@@ -3,6 +3,9 @@
     <v-container fluid>
       <v-row justify="center">
         <v-col cols="12" sm="10" md="6" lg="5" xl="4">
+          <v-alert v-if="error.active" type="error">
+            {{ error.message }}
+          </v-alert>
           <v-card ref="form">
             <v-card-text>
               <v-row justify="center" class="mb-2">
@@ -16,7 +19,7 @@
                 <v-col cols="12">
                   <v-text-field
                     label="Card Number"
-                    v-model="form.cardNumber"
+                    v-model="form.card_number"
                     prepend-inner-icon="mdi-credit-card"
                     :rules="rules"
                     required
@@ -60,7 +63,7 @@
       </v-row>
     </v-container>
     <v-container class="d-flex flex-row-reverse">
-      <v-btn color="yellow" @click="nextStep" class="ml-5" large>
+      <v-btn color="yellow" @click="submit" class="ml-5" large>
         Process Payment
       </v-btn>
       <v-btn text @click="backStep" large> Back </v-btn>
@@ -72,6 +75,7 @@
 import cartStore from "../../stores/cart";
 import steps from "../../constants/steps";
 import { formatNumber } from "../../helpers/currency";
+import api from "../../services/api";
 
 export default {
   name: "Checkout",
@@ -86,17 +90,47 @@ export default {
 
   data: () => ({
     form: {
-      cardNumber: "",
+      card_number: "",
       expiration: "",
       cv: "",
       owner: "",
+    },
+    error: {
+      active: false,
+      message: "",
     },
     rules: [(val) => (val || "").length > 0 || "This field is required"],
   }),
 
   methods: {
-    submit() {
-      this.nextStep();
+    setError(message) {
+      this.error = { active: true, message };
+    },
+    getPayload() {
+      const items = {};
+      Object.keys(cartStore.state.items).map(
+        (k) => (items[k] = cartStore.state.items[k].amount)
+      );
+
+      return {
+        payment: { ...this.form },
+        items,
+      };
+    },
+    async submit() {
+      const { card_number, expiration, cv, owner } = this.form;
+      if (!card_number || !expiration || !cv || !owner) {
+        this.setError("All fields are required!");
+        return false;
+      }
+
+      const response = await api.createOrder(this.getPayload());
+      if (response.status == 200) {
+        this.nextStep();
+        return;
+      }
+
+      this.setError(response.data.message);
     },
     nextStep: function () {
       this.$emit("step", steps.SUCCESS);
