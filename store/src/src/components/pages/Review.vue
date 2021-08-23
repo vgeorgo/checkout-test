@@ -27,7 +27,13 @@
       </template>
     </v-simple-table>
     <v-container class="d-flex flex-row-reverse">
-      <v-btn color="yellow" @click="nextStep" class="ml-5" large>
+      <v-btn
+        color="yellow"
+        @click="nextStep"
+        class="ml-5"
+        large
+        :disabled="totalItems == 0"
+      >
         Checkout
       </v-btn>
       <v-btn text @click="backStep" large> Back </v-btn>
@@ -45,6 +51,9 @@ export default {
   name: "Review",
 
   computed: {
+    totalItems: function () {
+      return cartStore.state.totalItems;
+    },
     items: function () {
       return itemStore.state.items;
     },

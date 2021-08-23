@@ -59,7 +59,13 @@
       </v-tab-item>
     </v-tabs>
     <v-container class="d-flex flex-row-reverse">
-      <v-btn color="yellow" @click="nextStep" class="ml-5" large>
+      <v-btn
+        color="yellow"
+        @click="nextStep"
+        class="ml-5"
+        large
+        :disabled="totalItems == 0"
+      >
         Review
       </v-btn>
       <v-btn text @click="clearCart" large> Clear cart </v-btn>
@@ -98,6 +104,9 @@ export default {
         if (!cartStore.state.items[item.id]) return formatNumber(0);
         return formatNumber(cartStore.state.items[item.id].total);
       };
+    },
+    totalItems: function () {
+      return cartStore.state.totalItems;
     },
     categoryItems: function () {
       const mapData = {};
