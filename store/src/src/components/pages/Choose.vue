@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-tabs vertical>
+  <v-container class="pa-0 ma-0">
+    <v-tabs vertical class="d-flex justify-center">
       <v-tab v-for="category in categories" :key="category.id">
         <v-icon left>{{ category.icon }}</v-icon>
         <div>{{ category.name }}</div>
@@ -9,7 +9,7 @@
       <v-tab-item
         v-for="category in categories"
         :key="`tab-${category.id}`"
-        class="pa-8"
+        class="pa-2 ml-6"
         :transition="false"
       >
         <v-container fluid>

@@ -36,6 +36,7 @@
             v-for="(config, stepId) in stepsConfig"
             :step="stepId"
             :key="`step-content-${stepId}`"
+            class="px-0 pb-0"
           >
             <component
               v-bind:is="config.component"
