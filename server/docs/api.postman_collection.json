@@ -1,12 +1,12 @@
 {
 	"info": {
 		"_postman_id": "527dbbdd-ac73-40ba-83cf-ce3c9c540a4b",
-		"name": "API Store",
+		"name": "api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "items",
+			"name": "menu",
 			"item": [
 				{
 					"name": "get",
@@ -14,14 +14,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/items",
+							"raw": "http://localhost:5000/menu",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "5000",
 							"path": [
-								"items"
+								"menu"
 							]
 						}
 					},

@@ -31,8 +31,8 @@ To simplify the application:
 
 Every route is also documented in a Postman file: **./server/docs/api.postman_collection.json**
 
-#### Items
-GET /items
+#### Menu
+GET /menu
 
 Returns both items and categories:
 ```
