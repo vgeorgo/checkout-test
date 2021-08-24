@@ -19,7 +19,7 @@ The store is a single page application and consists in 4 steps:
 
 ## Server
 
-Flask project connected to a SQLite database.
+Flask api project connected to a SQLite database.
 
 URL: http://localhost:5000
 
@@ -28,6 +28,9 @@ To simplify the application:
 - Payment and items are only being JSON encoded and saved with Order model
 
 ### Routes
+
+Every route is also documented in a Postman file: **./server/docs/api.postman_collection.json**
+
 #### Items
 GET /items
 
