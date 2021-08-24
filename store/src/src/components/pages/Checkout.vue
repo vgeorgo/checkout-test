@@ -32,8 +32,10 @@
                 <v-row justify="center">
                   <v-col cols="8">
                     <v-text-field
-                      label="Expiration Date"
+                      label="Expiration"
                       v-model="form.expiration"
+                      type="month"
+                      :min="getMinDate()"
                       prepend-inner-icon="mdi-calendar"
                       :rules="rules"
                       required
@@ -113,6 +115,10 @@ export default {
   }),
 
   methods: {
+    getMinDate() {
+      var dt = new Date();
+      return `${dt.getFullYear()}-${dt.getMonth() + 1}`;
+    },
     onlyNumbers(evt) {
       var reg = new RegExp("^[0-9]$");
       if (!reg.test(evt.key)) evt.preventDefault();
