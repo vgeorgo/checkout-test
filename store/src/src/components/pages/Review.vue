@@ -20,6 +20,7 @@
                 :src="`/images/items/${item.image_id}.jpg`"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 max-width="80px"
+                max-height="80px"
               />
             </td>
             <td class="text-left">{{ item.name }}</td>

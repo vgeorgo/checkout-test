@@ -1,5 +1,7 @@
-from api import db, Category, Item
+from api import app
+from models import setup_db, db, Category, Item
 
+setup_db(app)
 db.create_all()
 
 bakery = Category(name='Bakery', image_id='f3fbf57b118fa9')

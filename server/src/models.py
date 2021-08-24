@@ -1,7 +1,5 @@
 import os
-import json
 import datetime
-from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 

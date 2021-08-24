@@ -1,8 +1,9 @@
-import json
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
 
-from models import setup_db, db, Category, Item, Order
+from models import setup_db, Category, Item, Order
+from repositories import create_order
+from helpers import models_to_list
 from exceptions import BusinessException
 
 app = Flask(__name__)
@@ -12,8 +13,8 @@ setup_db(app)
 
 @app.route("/items", methods=['GET', 'OPTIONS'])
 def get_items():
-  categories = list(map(lambda c: c.to_dict(), Category.query.all()))
-  items = list(map(lambda i: i.to_dict(), Item.query.all()))
+  categories = models_to_list(Category.query.all())
+  items = models_to_list(Item.query.all())
 
   return make_response(jsonify({
     'categories': categories,
@@ -22,7 +23,7 @@ def get_items():
 
 @app.route("/orders", methods=['GET', 'OPTIONS'])
 def get_orders():
-  orders = list(map(lambda o: o.to_dict(), Order.query.all()))
+  orders = models_to_list(Order.query.all())
   
   return make_response(jsonify(orders), 200)
 
@@ -30,21 +31,7 @@ def get_orders():
 def post_orders():
   try:
     request_data = request.get_json()
-
-    payment = json.dumps(request_data['payment'])
-    items = json.dumps(request_data['items'])
-    total = 0.0
-
-    for item_id, count in request_data['items'].items():
-      item = Item.query.get(item_id)
-      if item == None:
-        raise BusinessException('Invalid product on the list')
-
-      total += (item.price * count)
-
-    order = Order(items, payment, total)
-    db.session.add(order)
-    db.session.commit()
+    order = create_order(request_data)    
 
     return make_response(jsonify(order.to_dict()), 200)
   except (BusinessException) as err:

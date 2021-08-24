@@ -21,8 +21,10 @@
                     <v-text-field
                       label="Card Number"
                       v-model="form.card_number"
+                      maxlength="16"
                       prepend-inner-icon="mdi-credit-card"
                       :rules="rules"
+                      v-on:keypress="onlyNumbers"
                       required
                     />
                   </v-col>
@@ -41,8 +43,10 @@
                     <v-text-field
                       label="CV Code"
                       v-model="form.cv"
+                      maxlength="4"
                       prepend-inner-icon="mdi-lock"
                       :rules="rules"
+                      v-on:keypress="onlyNumbers"
                       required
                     />
                   </v-col>
@@ -109,6 +113,10 @@ export default {
   }),
 
   methods: {
+    onlyNumbers(evt) {
+      var reg = new RegExp("^[0-9]$");
+      if (!reg.test(evt.key)) evt.preventDefault();
+    },
     setError(message) {
       this.error = { active: true, message };
     },
