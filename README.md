@@ -24,7 +24,7 @@ Flask api project connected to a SQLite database.
 URL: http://localhost:5000
 
 To simplify the application:
-- Items and categories are already store in the database
+- Items and categories are already stored in the database
 - Payment and items are only being JSON encoded and saved with Order model
 
 ### Routes
