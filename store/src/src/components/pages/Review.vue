@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-simple-table class="mb-10">
       <template v-slot:default>
         <thead>
@@ -38,7 +38,7 @@
         </tbody>
       </template>
     </v-simple-table>
-    <v-container class="d-flex flex-row-reverse">
+    <v-container class="d-flex flex-row-reverse" fluid>
       <v-btn
         color="yellow"
         @click="nextStep"

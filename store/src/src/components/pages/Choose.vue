@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0 ma-0">
+  <v-container class="pa-0 ma-0" fluid>
     <v-tabs vertical class="d-flex justify-center">
       <v-tab v-for="category in categories" :key="category.id">
         <v-icon left>{{ category.icon }}</v-icon>
@@ -20,7 +20,7 @@
         </v-container>
       </v-tab-item>
     </v-tabs>
-    <v-container class="d-flex flex-row-reverse">
+    <v-container class="d-flex flex-row-reverse" fluid>
       <v-btn
         color="yellow"
         @click="nextStep"

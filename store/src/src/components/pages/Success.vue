@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card color="green" class="mb-5">
       <v-card-title>
         <span class="text-h6 font-weight-light">Enjoy!</span>
@@ -9,7 +9,7 @@
         Order successfully processed, have a nice day!
       </v-card-text>
     </v-card>
-    <v-container class="d-flex flex-row-reverse">
+    <v-container class="d-flex flex-row-reverse" fluid>
       <v-btn color="yellow" @click="backStep" large> Back </v-btn>
     </v-container>
   </v-container>

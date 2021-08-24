@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-form ref="form">
       <v-container fluid>
         <v-row justify="center">
@@ -70,7 +70,7 @@
         </v-row>
       </v-container>
     </v-form>
-    <v-container class="d-flex flex-row-reverse">
+    <v-container class="d-flex flex-row-reverse" fluid>
       <v-btn color="yellow" @click="submit" class="ml-5" large>
         Process Payment
       </v-btn>
