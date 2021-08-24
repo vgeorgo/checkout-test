@@ -8,8 +8,6 @@ services:
       - "5000:5000"
     volumes:
       - ./server/src:/usr/src
-    stdin_open: true
-    tty: true
 
   store:
     build: ./store
@@ -18,5 +16,6 @@ services:
       - "8080:8080"
     volumes:
       - ./store/src:/usr/src
+      - /usr/src/node_modules/
     depends_on:
       - server

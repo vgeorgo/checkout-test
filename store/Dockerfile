@@ -2,7 +2,10 @@ FROM node:14-alpine
 
 WORKDIR /usr/src
 
-COPY ./src .
+COPY ./src/package*.json ./
 RUN npm install
 
-ENTRYPOINT ["npm", "run", "serve"]
+COPY ./src ./
+
+EXPOSE 8080
+ENTRYPOINT [ "npm", "run", "serve" ]
