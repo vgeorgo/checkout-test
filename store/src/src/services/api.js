@@ -8,8 +8,8 @@ const api = axios.create({
   validateStatus: (status) => status >= 200 && status < 500,
 });
 
-const getItems = () => {
-  return api.get('/items');
+const getMenu = () => {
+  return api.get('/menu');
 }
 
 const createOrder = (payload) => {
@@ -17,6 +17,6 @@ const createOrder = (payload) => {
 }
 
 export default {
-  getItems,
+  getMenu,
   createOrder,
 }

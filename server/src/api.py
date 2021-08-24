@@ -11,8 +11,8 @@ cors = CORS(app)
 
 setup_db(app)
 
-@app.route("/items", methods=['GET', 'OPTIONS'])
-def get_items():
+@app.route("/menu", methods=['GET', 'OPTIONS'])
+def get_menu():
   categories = models_to_list(Category.query.all())
   items = models_to_list(Item.query.all())
 

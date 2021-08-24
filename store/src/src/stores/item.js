@@ -17,7 +17,7 @@ export default new Vuex.Store({
   },
   mutations: {
     loadItems(state) {
-      api.getItems().then(function (response) {
+      api.getMenu().then(function (response) {
         state.categories = response.data.categories;
         state.items = response.data.items;
       });
